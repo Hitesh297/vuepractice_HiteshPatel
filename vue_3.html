@@ -14,23 +14,35 @@
 	<div id="app">
 		<span v-if="profile">
 			Profile of {{profile.fname}} {{profile.lname}} 
+			<figure>
+				<img v-if="profile.pic" v-bind:src="profile.pic" alt="image of Steve Harrington" height="300">
+				<img v-else src="https://www.w3schools.com/howto/img_avatar.png" alt="profile pic placeholder" height="300">
+				<figcaption><b>{{profile.fname}} {{profile.lname}}</b></figcaption>
+				<p v-if="profile.desc">{{profile.desc}}</p>
+				<p v-else>No description available</p>
+				<p v-if="profile.bio">{{profile.bio}}</p>
+				<p v-else>No bio available</p>
+			  </figure>
 		</span>
 		<span v-else>
 			No Profile Data found.
 		</span>
+
+		
 	</div>
 	
 	<script>
 	var app = new Vue({
 		el: '#app',
-		
 		data:{
-			/*
 			profile:{
-				fname: "John",
-				lname: "Doe"	
+				fname: "Hitesh",
+				lname: "Patel",
+				desc: "Student at Humber",
+				bio: "Likes to code",
+				pic: "https://upload.wikimedia.org/wikipedia/en/8/8b/ST3_Steve_Harrington_portrait.jpg"	
 			}
-			*/
+			
 		}
 		
 	});
