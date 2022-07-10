@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+
+	<title>Problem J2: Epidemiology</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<style>
+		.formfield {
+			margin-bottom: 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<p>Epidemiology Problem. <a href="https://cemc.uwaterloo.ca/contests/computing/2020/index.html">from the J2 problem
+			hosted by the CCC.</a></p>
+	<p>This application calulates the number of days a disease takes to infect a number of people. </p>
+	<div id="app">
+		<div class="formfield">
+			<label>Total number of people that had disease: <label> <input v-on:blur="valueChanged"
+						v-model="total_infections">
+		</div>
+		<div class="formfield">
+			<label>The number of people who have the disease on Day 0: <label> <input v-on:blur="valueChanged"
+						v-model="day0_count">
+		</div>
+		<div class="formfield">
+			<label>Rate of infection(number of people infected from one person per day): <label> <input
+						v-on:blur="valueChanged" v-model="infection_rate">
+		</div>
+		<div id="result">
+			<p v-if="display_result">The disease took {{days_to_reach_total_infections}} Days to infect
+				{{total_infections}} People</p>
+		</div>
+	</div>
+
+	<script>
+		var app = new Vue({
+			el: '#app',
+			data: {
+				total_infections: 0,
+				day0_count: 0,
+				infection_rate: 0,
+				display_result: false
+			},
+			computed: {
+				days_to_reach_total_infections: function () {
+					console.log("Total Number of Infections: " + this.total_infections);
+					console.log("Day 0 count: " + this.day0_count);
+					var daycount = parseInt(this.day0_count);
+					var total = parseInt(this.day0_count);
+					var days = 0;
+					if (this.day0_count != 0 && this.total_infections != 0 && this.infection_rate != 0) {
+						// repeat the loop untill infected people count reaches input value
+						while (total < parseInt(this.total_infections)) {
+							// increase number of days for each iteration
+							days++;
+							// get number of people infected per day
+							daycount = daycount * this.infection_rate;
+							// add per day count to total
+							total = total + daycount;
+							console.log("Day " + days, "Infected: " + daycount, "Total count:" + total, "Total to reach: " + this.total_infections);
+						}
+					}
+
+					return (days);
+				}
+			},
+			methods: {
+				valueChanged: function () {
+					// display result only if valid values are entered
+					console.log("Text value changed");
+					if (this.day0_count != 0 && this.total_infections != 0 && this.infection_rate != 0) {
+						this.display_result = true;
+					} else {
+						this.display_result = false;
+					}
+				}
+			}
+		});
+
+	</script>
+</body>
+
+</html>
